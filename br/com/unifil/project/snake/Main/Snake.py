@@ -1,95 +1,86 @@
 import pygame
-
-print("Welcome to Snake-project")
-print("Teste")
+from pygame.locals import *
 
 def main():
     # Iniciar o pygame
     pygame.init()
 
-    # Carregar e definir o logotipo
-    logo = pygame.image.load("logo32x32.png")
-    pygame.display.set_icon(logo)
-    pygame.display.set_caption("movement")
+    # Tela do jogo
+    screen = pygame.display.set_mode((600, 600))
+    pygame.display.set_caption("Snake")
 
-    # Crie uma superfície na tela que tenha o tamanho de 500 x 500
-    screen_width = 500
-    screen_height = 500
-    screen = pygame.display.set_mode((screen_width, screen_height))
+    # Tamanho da cobra padrão
+    snake = [(200, 200), (210, 200), (220, 200), (230, 200)]
+    # Quantos de pixels ocupa cada tupla da cobra
+    snake_skin = pygame.Surface((10, 10))
+    # Cor da cobra
+    snake_skin.fill((255, 255, 255))
 
-    # Carregar imagem
-    image = pygame.image.load("imagem01.jpg")
-    # Faz com que a imagem fique transparente
-    image.set_alpha(128)
-    background = pygame.image.load("background.jpg")
+    # Quantos de pixel ocupa cada maçã
+    apple = pygame.Surface((10, 10))
+    # Cor da maçã
+    apple.fill((255, 0, 0))
 
-    # Esta função, funciona em algumas imagens, caso esta imagem não tem um valor alpha, aí faz com que tire as
-    # bordas da imagem selecionada
-    image.set_colorkey((255, 0, 255))
+    # Quantos de pixel ocupa cada maçã
+    apple2 = pygame.Surface((10, 10))
+    # Cor da maçã
+    apple2.fill((0, 255, 0))
 
-    # blit - O que faz é copiar os pixels da superfície da imagem para a superfície da tela
-    screen.blit(background, (0, 0))
+    # Direção da cobra
+    UP = 0
+    RIGHT = 1
+    DOWN = 2
+    LEFT = 3
 
-    # Com esta função, faz com que o background do cenário fique tudo branco
-    # screen.fill((255, 255, 255))
+    direcao = LEFT
 
-    # Define a posição da imagem
-    x_pos = 50
-    y_pos = 50
-
-    # Quantos pixels nós movemos o nosso quadro
-    step_x = 10
-    step_y = 10
-
-    # Copia os pixels da imagem na tela
-    screen.blit(image, (x_pos, y_pos))
-    #screen.blit(image, (50, 50))
-
-    # Atualizar a tela
-    pygame.display.flip()
-
-    # Clock para controlar o FPS depois
     clock = pygame.time.Clock()
 
-    # Defina uma variável para controlar o loop principal
-    running = True
-
-    # Main loop
-    while running:
-        # Manipulação de eventos, obtém todos os eventos da fila de eventos
-        for event in pygame.event.get():
-            # Só faça algo se o evento for do tipo QUIT
-            if event.type == pygame.QUIT:
-                # Mude o valor para False, para sair do main loop
-                running = False
-
-            # Verifique a tecla e verifique se foi Esc
-            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-                running = False
-
-        # Verifique se a imagem ainda está na tela, se não, mudar de direção
-        if x_pos > screen_width-64 or x_pos < 0:
-            step_x = -step_x
-        if y_pos > screen_height - 64 or y_pos < 0:
-            step_y = -step_y
-
-        # Atualizar a posição da imagem
-        x_pos += step_x  # Mover para a direita
-        y_pos += step_y  # Mover para baixo
-
-        # Agora, copia todos os pixels(blit) da imagem na tela
-        screen.blit(image, (x_pos, y_pos))
-        #screen.blit(image, (50, 50))
-
-        # Atualiza a tela
-        pygame.display.flip()
-
-        # isso vai diminuir a velocidade para 10 fps, para que você possa assisti-lo,
-        # caso contrário, seria executado muito rápido
+    while True:
         clock.tick(10)
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
 
-# Executar a função principal somente se este módulo for executado como o script principal
-# (se você importar isso como um módulo, nada será executado)
-if __name__=="__main__":
+            if event.type == pygame.KEYDOWN:
+                if event.key == K_UP:
+                    direcao = UP
+                if event.key == K_DOWN:
+                    direcao = DOWN
+                if event.key == K_RIGHT:
+                    direcao = RIGHT
+                if event.key == K_LEFT:
+                    direcao = LEFT
+
+        if direcao == UP:
+            snake[0] = (snake[0][0], snake[0][1] - 10)
+        if direcao == DOWN:
+            snake[0] = (snake[0][0], snake[0][1] + 10)
+        if direcao == RIGHT:
+            snake[0] = (snake[0][0] + 10, snake[0][1])
+        if direcao == LEFT:
+            snake[0] = (snake[0][0] - 10, snake[0][1])
+
+        # Faz com que a cobra se movimente.
+        # as tuplas(corpo da cobra) vão se movimentando sempre na posição anterior onde a tupla da frente estava
+        # ocupando antes de se movimentar
+        for i in range(len(snake) - 1, 0, -1):
+            snake[i] = (snake[i - 1][0], snake[i - 1][1])
+
+        # Limpar a tela
+        screen.fill((0, 0, 0))
+
+        screen.blit(apple, (50, 50))
+        screen.blit(apple2, (100, 500))
+
+        for posicao in snake:
+            screen.blit(snake_skin, posicao)
+
+
+
+        pygame.display.update()
+        #pygame.display.flip()
+
+if __name__ == "__main__":
     # Chamar a função main
     main()
