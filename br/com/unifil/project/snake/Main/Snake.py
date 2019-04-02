@@ -58,7 +58,10 @@ def main():
             # bordas da imagem selecionada
             #image.set_colorkey((255, 0, 255))
 
-            screen.blit(image, (50, 50))
+            #screen.blit(image, (50, 50))
+            screen.blit(image, (x_pos, y_pos))
+
+            # Atualizar a tela
             pygame.display.flip()
 
             # Só faça algo se o evento for do tipo QUIT
