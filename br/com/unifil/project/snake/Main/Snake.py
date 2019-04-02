@@ -18,20 +18,19 @@ def main():
 
     # Carregar imagem
     image = pygame.image.load("imagem01.jpg")
+    # Faz com que a imagem fique transparente
+    image.set_alpha(128)
+    background = pygame.image.load("background.jpg")
 
     # Esta função, funciona em algumas imagens, caso esta imagem não tem um valor alpha, aí faz com que tire as
     # bordas da imagem selecionada
-    #image.set_colorkey((255, 0, 255))
+    image.set_colorkey((255, 0, 255))
 
-    # Faz com que a imagem fique transparente
-    image.set_alpha(120)
+    # blit - O que faz é copiar os pixels da superfície da imagem para a superfície da tela
+    screen.blit(background, (0, 0))
 
     # Com esta função, faz com que o background do cenário fique tudo branco
     # screen.fill((255, 255, 255))
-
-    background = pygame.image.load("background.jpg")
-    # blit - O que faz é copiar os pixels da superfície da imagem para a superfície da tela
-    screen.blit(background, (0, 0))
 
     # Define a posição da imagem
     x_pos = 50
@@ -42,8 +41,8 @@ def main():
     step_y = 10
 
     # Copia os pixels da imagem na tela
-    #screen.blit(image, (x_pos, y_pos))
-    screen.blit(image, (50, 50))
+    screen.blit(image, (x_pos, y_pos))
+    #screen.blit(image, (50, 50))
 
     # Atualizar a tela
     pygame.display.flip()
@@ -68,7 +67,7 @@ def main():
                 running = False
 
         # Verifique se a imagem ainda está na tela, se não, mudar de direção
-        if x_pos > screen_width - 64 or x_pos < 0:
+        if x_pos > screen_width-64 or x_pos < 0:
             step_x = -step_x
         if y_pos > screen_height - 64 or y_pos < 0:
             step_y = -step_y
@@ -78,8 +77,8 @@ def main():
         y_pos += step_y  # Mover para baixo
 
         # Agora, copia todos os pixels(blit) da imagem na tela
-        #screen.blit(image, (x_pos, y_pos))
-        screen.blit(image, (50, 50))
+        screen.blit(image, (x_pos, y_pos))
+        #screen.blit(image, (50, 50))
 
         # Atualiza a tela
         pygame.display.flip()
