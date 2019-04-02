@@ -12,7 +12,7 @@ def main():
     pygame.display.set_caption("minimal program")
 
     # Crie uma superfície na tela que tenha o tamanho de 240 x 180
-    screen = pygame.display.set_mode((240,180))
+    screen = pygame.display.set_mode((500,500))
 
     # Defina uma variável para controlar o loop principal
     running = True
@@ -21,3 +21,24 @@ def main():
     while running:
         # Manipulação de eventos, obtém todos os eventos da fila de eventos
         for event in pygame.event.get():
+            # Carregar imagem
+            image = pygame.image.load("imagem01.jpg")
+            background = pygame.image.load("background.jpg")
+
+            #screen.fill((255, 255, 255))
+
+            # blit - O que faz é copiar os pixels da superfície da imagem para a superfície da tela
+            screen.blit(background, (0, 0))
+            screen.blit(image, (50,50))
+            pygame.display.flip()
+
+            # Só faça algo se o evento for do tipo QUIT
+            if event.type == pygame.QUIT:
+                # Mude o valor para False, para sair do main loop
+                running = False
+
+# Executar a função principal somente se este módulo for executado como o script principal
+# (se você importar isso como um módulo, nada será executado)
+if __name__=="__main__":
+    # Chamar a função main
+    main()
