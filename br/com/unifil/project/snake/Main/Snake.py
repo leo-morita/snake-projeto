@@ -1,3 +1,3 @@
-print("Hello, World")
-print("Projeto do jogo Snake")
-print("Testando")
+import pygame
+
+print("Welcome to Snake-project")
