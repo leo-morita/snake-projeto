@@ -1,6 +1,7 @@
 import pygame
 
 print("Welcome to Snake-project")
+print("Teste")
 
 def main():
     # Iniciar o pygame
