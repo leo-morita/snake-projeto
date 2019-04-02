@@ -1,6 +1,10 @@
 import pygame
 from pygame.locals import *
 
+
+def colisao(snake, apple):
+    return (snake[0] == apple[0]) and (snake[1] == apple[1])
+
 def main():
     # Iniciar o pygame
     pygame.init()
@@ -17,6 +21,7 @@ def main():
     snake_skin.fill((255, 255, 255))
 
     # Quantos de pixel ocupa cada maçã
+    apple_posicao = (50, 50)
     apple = pygame.Surface((10, 10))
     # Cor da maçã
     apple.fill((255, 0, 0))
@@ -42,6 +47,10 @@ def main():
             if event.type == pygame.QUIT:
                 pygame.quit()
 
+            # Para fechar o jogo, basta apertar a tecla 'ESC'
+            if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                pygame.quit()
+
             if event.type == pygame.KEYDOWN:
                 if event.key == K_UP:
                     direcao = UP
@@ -52,6 +61,7 @@ def main():
                 if event.key == K_LEFT:
                     direcao = LEFT
 
+        # Faz com que a cobra se movimente.
         if direcao == UP:
             snake[0] = (snake[0][0], snake[0][1] - 10)
         if direcao == DOWN:
@@ -61,7 +71,9 @@ def main():
         if direcao == LEFT:
             snake[0] = (snake[0][0] - 10, snake[0][1])
 
-        # Faz com que a cobra se movimente.
+        if colisao(snake[0], apple_posicao):
+            snake.append((0, 0))
+
         # as tuplas(corpo da cobra) vão se movimentando sempre na posição anterior onde a tupla da frente estava
         # ocupando antes de se movimentar
         for i in range(len(snake) - 1, 0, -1):
@@ -70,7 +82,7 @@ def main():
         # Limpar a tela
         screen.fill((0, 0, 0))
 
-        screen.blit(apple, (50, 50))
+        screen.blit(apple, apple_posicao)
         screen.blit(apple2, (100, 500))
 
         for posicao in snake:
