@@ -25,11 +25,16 @@ def main():
             image = pygame.image.load("imagem01.jpg")
             background = pygame.image.load("background.jpg")
 
+
+
+            # Com esta função, faz com que o background do cenário fique tudo branco
             #screen.fill((255, 255, 255))
 
             # blit - O que faz é copiar os pixels da superfície da imagem para a superfície da tela
             screen.blit(background, (0, 0))
-            screen.blit(image, (50,50))
+            image.set_alpha(128)
+            #image.set_colorkey((255, 0, 255))
+            screen.blit(image, (50, 50))
             pygame.display.flip()
 
             # Só faça algo se o evento for do tipo QUIT
