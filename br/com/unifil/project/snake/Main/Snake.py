@@ -35,20 +35,22 @@ def main():
     RIGHT = 1
     DOWN = 2
     LEFT = 3
-
     direcao = LEFT
 
+    # FPS do jogo
     clock = pygame.time.Clock()
 
+    # Variável para controlar o fluxo de execução do jogo
     running = True
-
     while running:
+        # FPS setado para 10
         clock.tick(10)
         for event in pygame.event.get():
             # Para fechar o jogo, basta clicar no botão 'X' da tela, ou apertar a tecla 'ESC'
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
                 running = False
 
+            # Configuração das teclas para movimentar a cobra
             if event.type == pygame.KEYDOWN:
                 if event.key == K_UP:
                     direcao = UP
@@ -59,7 +61,7 @@ def main():
                 if event.key == K_LEFT:
                     direcao = LEFT
 
-        # Faz com que a cobra se movimente.
+        # Método que faz com que a cobra se movimente.
         if direcao == UP:
             snake[0] = (snake[0][0], snake[0][1] - 10)
         if direcao == DOWN:
@@ -69,6 +71,7 @@ def main():
         if direcao == LEFT:
             snake[0] = (snake[0][0] - 10, snake[0][1])
 
+        # Método que verifica a colisão da cobra com a maçã
         if colisao(snake[0], apple_posicao):
             #if apple.get_colorkey() == (0, 0, 0):
                 #snake.append((0, 0))
@@ -86,15 +89,13 @@ def main():
         # Limpar a tela
         screen.fill((0, 0, 0))
 
-        #screen.blit(apple_posicao[0], (apple_posicao[0][0], apple_posicao[0][1]))
-        #screen.blit(apple_posicao[1], (80, 80)))
+        # Plotando as maçãs na tela
         screen.blit(apple, apple_posicao)
         screen.blit(apple2, (100, 500))
 
+        # Plotando a cobra na tela
         for posicao in snake:
             screen.blit(snake_skin, posicao)
-
-
 
         pygame.display.update()
         #pygame.display.flip()
