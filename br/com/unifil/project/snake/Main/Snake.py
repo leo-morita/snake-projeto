@@ -1,8 +1,8 @@
-import pygame
+import pygame, random
 from pygame.locals import *
 
-def colisao(snake, apple):
-    return (snake[0] == apple[0]) and (snake[1] == apple[1])
+def colisao(obj1, obj2):
+    return (obj1[0] == obj2[0]) and (obj1[1] == obj2[1])
 
 def main():
     # Iniciar o pygame
@@ -12,6 +12,10 @@ def main():
     screen = pygame.display.set_mode((600, 600))
     pygame.display.set_caption("Snake")
 
+    # Background da tela
+    background = pygame.image.load("background600x600.jpg")
+    screen.blit(background, (0, 0))
+
     # Tamanho da cobra padrão
     snake = [(200, 200), (210, 200), (220, 200), (230, 200)]
     # Quantos de pixels ocupa cada tupla da cobra
@@ -20,15 +24,22 @@ def main():
     snake_skin.fill((255, 255, 255))
 
     # Quantos de pixel ocupa cada maçã
-    apple_posicao = (50, 50)
+    apple1_posicao = (50, 50)
     apple = pygame.Surface((10, 10))
     # Cor da maçã
     apple.fill((255, 0, 0))
 
     # Quantos de pixel ocupa cada maçã
+    apple2_posicao = (100, 500)
     apple2 = pygame.Surface((10, 10))
     # Cor da maçã
     apple2.fill((255, 0, 0))
+
+    # Quantos de pixel ocupa cada maçã
+    apple3_posicao = (590, 200)
+    apple3 = pygame.Surface((10, 10))
+    # Cor da maçã
+    apple3.fill((255, 0, 0))
 
     # Direção da cobra
     UP = 0
@@ -43,7 +54,7 @@ def main():
     # Variável para controlar o fluxo de execução do jogo
     running = True
     while running:
-        # FPS setado para 10
+        # FPS setado para 10 - Velocidade da movimentação do jogo
         clock.tick(10)
         for event in pygame.event.get():
             # Para fechar o jogo, basta clicar no botão 'X' da tela, ou apertar a tecla 'ESC'
@@ -71,15 +82,29 @@ def main():
         if direcao == LEFT:
             snake[0] = (snake[0][0] - 10, snake[0][1])
 
-        # Método que verifica a colisão da cobra com a maçã
-        if colisao(snake[0], apple_posicao):
-            #if apple.get_colorkey() == (0, 0, 0):
-                #snake.append((0, 0))
+        # Método condicional que verifica a colisão da cobra com a maçã
+        if colisao(snake[0], apple1_posicao):
             if apple.get_at((0, 0)) == (255, 0, 0, 255):
                 snake.append((0, 0))
-                snake_skin.fill((255, 0, 0))
-            apple.fill((0, 0, 0))
+                snake_skin.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+                apple.fill((0, 0, 0))
 
+        if colisao(snake[0], apple2_posicao):
+            if apple2.get_at((0, 0)) == (255, 0, 0, 255):
+                snake.append((0, 0))
+                snake_skin.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+                apple2.fill((0, 0, 0))
+
+        if colisao(snake[0], apple3_posicao):
+            if apple3.get_at((0, 0)) == (255, 0, 0, 255):
+                snake.append((0, 0))
+                snake_skin.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+                apple3.fill((0, 0, 0))
+
+        # Método condicional que verifica a colisão da cobra contra o seu próprio corpo
+        #if colisao(snake[0], ):
+            #print("Entrou na condicional")
+            #running = False
 
         # as tuplas(corpo da cobra) vão se movimentando sempre na posição anterior onde a tupla da frente estava
         # ocupando antes de se movimentar
@@ -90,8 +115,9 @@ def main():
         screen.fill((0, 0, 0))
 
         # Plotando as maçãs na tela
-        screen.blit(apple, apple_posicao)
-        screen.blit(apple2, (100, 500))
+        screen.blit(apple, apple1_posicao)
+        screen.blit(apple2, apple2_posicao)
+        screen.blit(apple3, apple3_posicao)
 
         # Plotando a cobra na tela
         for posicao in snake:
