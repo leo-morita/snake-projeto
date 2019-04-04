@@ -15,6 +15,7 @@ def main():
     # Background da tela
     background = pygame.image.load("background600x600.jpg")
     screen.blit(background, (0, 0))
+    pygame.display.update()
 
     # Tamanho da cobra padrão
     snake = [(200, 200), (210, 200), (220, 200), (230, 200)]
@@ -84,22 +85,22 @@ def main():
 
         # Método condicional que verifica a colisão da cobra com a maçã
         if colisao(snake[0], apple1_posicao):
-            if apple.get_at((0, 0)) == (255, 0, 0, 255):
+            if apple.get_at((0, 0)) == (255, 0, 0, 255) and apple.get_alpha() != 0:
                 snake.append((0, 0))
                 snake_skin.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
-                apple.fill((0, 0, 0))
+                apple.set_alpha(0)
 
-        if colisao(snake[0], apple2_posicao):
-            if apple2.get_at((0, 0)) == (255, 0, 0, 255):
+        if colisao(snake[0], apple2_posicao) and apple2.get_alpha() != 0:
+            if apple2.get_at((0, 0)) == (255, 0, 0, 255) and apple2.get_alpha() != 0:
                 snake.append((0, 0))
                 snake_skin.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
-                apple2.fill((0, 0, 0))
+                apple2.set_alpha(0)
 
-        if colisao(snake[0], apple3_posicao):
+        if colisao(snake[0], apple3_posicao) and apple3.get_alpha() != 0:
             if apple3.get_at((0, 0)) == (255, 0, 0, 255):
                 snake.append((0, 0))
                 snake_skin.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
-                apple3.fill((0, 0, 0))
+                apple3.set_alpha(0)
 
         # Método condicional que verifica a colisão da cobra contra o seu próprio corpo
         #if colisao(snake[0], ):
@@ -113,6 +114,7 @@ def main():
 
         # Limpar a tela
         screen.fill((0, 0, 0))
+        screen.blit(background, (0, 0))
 
         # Plotando as maçãs na tela
         screen.blit(apple, apple1_posicao)
