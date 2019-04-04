@@ -114,9 +114,12 @@ def main():
                 apple3.set_alpha(0)
 
         # Método condicional que verifica a colisão da cobra contra o seu próprio corpo
-        #if colisao(snake[0], ):
-            #print("Entrou na condicional")
-            #running = False
+        for posicao in snake[1:]:
+            if colisao(snake[0], posicao):
+                screen.blit(*text_objects(fonte_game_over, 'O jogo acabou!', (255, 255, 255), screen.get_rect().center))
+                pygame.display.update()
+                clock.tick(0.5)
+                running = False
 
         # Método condicional que verifica a colisão da cobra com a borda da tela
         # Borda esquerda e direita
