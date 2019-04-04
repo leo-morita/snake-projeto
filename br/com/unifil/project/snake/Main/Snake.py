@@ -1,4 +1,5 @@
-import pygame, random
+import pygame
+import random
 from pygame.locals import *
 
 def colisao(obj1, obj2):
@@ -11,6 +12,9 @@ def text_objects(font, text, color, text_center):
 def main():
     # Iniciar o pygame
     pygame.init()
+
+    # Pontuação do jogo
+    pontos = 0
 
     # Tela do jogo
     largura_tela = 600
@@ -71,6 +75,7 @@ def main():
         for event in pygame.event.get():
             # Para fechar o jogo, basta clicar no botão 'X' da tela, ou apertar a tecla 'ESC'
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                print("Pontuação: ", pontos)
                 running = False
 
             # Configuração das teclas para movimentar a cobra
@@ -99,18 +104,21 @@ def main():
             if apple.get_at((0, 0)) == (255, 0, 0, 255) and apple.get_alpha() != 0:
                 snake.append((0, 0))
                 snake_skin.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+                pontos += 1
                 apple.set_alpha(0)
 
         if colisao(snake[0], apple2_posicao) and apple2.get_alpha() != 0:
             if apple2.get_at((0, 0)) == (255, 0, 0, 255) and apple2.get_alpha() != 0:
                 snake.append((0, 0))
                 snake_skin.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+                pontos += 1
                 apple2.set_alpha(0)
 
         if colisao(snake[0], apple3_posicao) and apple3.get_alpha() != 0:
             if apple3.get_at((0, 0)) == (255, 0, 0, 255):
                 snake.append((0, 0))
                 snake_skin.fill((random.randint(0, 255), random.randint(0, 255), random.randint(0, 255)))
+                pontos += 1
                 apple3.set_alpha(0)
 
         # Método condicional que verifica a colisão da cobra contra o seu próprio corpo
@@ -119,6 +127,7 @@ def main():
                 screen.blit(*text_objects(fonte_game_over, 'O jogo acabou!', (255, 255, 255), screen.get_rect().center))
                 pygame.display.update()
                 clock.tick(0.5)
+                print("Pontuação: ", pontos)
                 running = False
 
         # Método condicional que verifica a colisão da cobra com a borda da tela
@@ -127,6 +136,7 @@ def main():
             screen.blit(*text_objects(fonte_game_over, 'O jogo acabou!', (255, 255, 255), screen.get_rect().center))
             pygame.display.update()
             clock.tick(0.5)
+            print("Pontuação: ", pontos)
             running = False
 
         # Borda de cima e de baixo
@@ -134,6 +144,7 @@ def main():
             screen.blit(*text_objects(fonte_game_over, 'O jogo acabou!', (255, 255, 255), screen.get_rect().center))
             pygame.display.update()
             clock.tick(0.5)
+            print("Pontuação: ", pontos)
             running = False
 
         # as tuplas(corpo da cobra) vão se movimentando sempre na posição anterior onde a tupla da frente estava
