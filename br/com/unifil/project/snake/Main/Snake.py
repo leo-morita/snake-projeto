@@ -4,12 +4,18 @@ from pygame.locals import *
 def colisao(obj1, obj2):
     return (obj1[0] == obj2[0]) and (obj1[1] == obj2[1])
 
+def text_objects(font, text, color, text_center):
+    rendered = font.render(text, True, color)
+    return rendered, rendered.get_rect(center=text_center)
+
 def main():
     # Iniciar o pygame
     pygame.init()
 
     # Tela do jogo
-    screen = pygame.display.set_mode((600, 600))
+    largura_tela = 600
+    altura_tela = 600
+    screen = pygame.display.set_mode((largura_tela, altura_tela))
     pygame.display.set_caption("Snake")
 
     # Background da tela
@@ -53,7 +59,9 @@ def main():
     clock = pygame.time.Clock()
 
     # Mensagem na tela
-    fonte_padrao = pygame.font.get_1"   "
+    pygame.font.init()
+    fonte_padrao = pygame.font.get_default_font()
+    fonte_game_over = pygame.font.SysFont(fonte_padrao, 50)
 
     # Variável para controlar o fluxo de execução do jogo
     running = True
@@ -113,6 +121,12 @@ def main():
         # Método condicional que verifica a colisão da cobra com a borda da tela
         # Borda esquerda e direita
         if snake[0][0] < 0 or snake[0][0] >= 599:
+            #texto = fonte_game_over.render('O jogo acabou!', 1, (255, 255, 255))
+
+            #screen.blit.center(texto, (largura_tela/2, altura_tela/2))
+            screen.blit(*text_objects(fonte_game_over, 'O jogo acabou!', (255, 255, 255), screen.get_rect().center))
+            pygame.display.update()
+            clock.tick(0.5)
             running = False
 
         # Borda de cima e de baixo
