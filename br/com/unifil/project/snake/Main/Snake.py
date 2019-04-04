@@ -121,9 +121,6 @@ def main():
         # Método condicional que verifica a colisão da cobra com a borda da tela
         # Borda esquerda e direita
         if snake[0][0] < 0 or snake[0][0] >= 599:
-            #texto = fonte_game_over.render('O jogo acabou!', 1, (255, 255, 255))
-
-            #screen.blit.center(texto, (largura_tela/2, altura_tela/2))
             screen.blit(*text_objects(fonte_game_over, 'O jogo acabou!', (255, 255, 255), screen.get_rect().center))
             pygame.display.update()
             clock.tick(0.5)
@@ -131,6 +128,9 @@ def main():
 
         # Borda de cima e de baixo
         if snake[0][1] < 0 or snake[0][1] >= 599:
+            screen.blit(*text_objects(fonte_game_over, 'O jogo acabou!', (255, 255, 255), screen.get_rect().center))
+            pygame.display.update()
+            clock.tick(0.5)
             running = False
 
         # as tuplas(corpo da cobra) vão se movimentando sempre na posição anterior onde a tupla da frente estava
