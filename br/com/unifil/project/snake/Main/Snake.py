@@ -52,6 +52,9 @@ def main():
     # FPS do jogo
     clock = pygame.time.Clock()
 
+    # Mensagem na tela
+    fonte_padrao = pygame.font.get_1"   "
+
     # Variável para controlar o fluxo de execução do jogo
     running = True
     while running:
@@ -106,6 +109,15 @@ def main():
         #if colisao(snake[0], ):
             #print("Entrou na condicional")
             #running = False
+
+        # Método condicional que verifica a colisão da cobra com a borda da tela
+        # Borda esquerda e direita
+        if snake[0][0] < 0 or snake[0][0] >= 599:
+            running = False
+
+        # Borda de cima e de baixo
+        if snake[0][1] < 0 or snake[0][1] >= 599:
+            running = False
 
         # as tuplas(corpo da cobra) vão se movimentando sempre na posição anterior onde a tupla da frente estava
         # ocupando antes de se movimentar
