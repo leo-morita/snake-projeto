@@ -66,6 +66,7 @@ def main():
     pygame.font.init()
     fonte_padrao = pygame.font.get_default_font()
     fonte_game_over = pygame.font.SysFont(fonte_padrao, 50)
+    fonte_winner = pygame.font.SysFont(fonte_padrao, 60)
 
     # Variável para controlar o fluxo de execução do jogo
     running = True
@@ -164,6 +165,13 @@ def main():
         # Plotando a cobra na tela
         for posicao in snake:
             screen.blit(snake_skin, posicao)
+
+        # Condição para vencer o jogo
+        if pontos == 3:
+            screen.blit(*text_objects(fonte_winner, 'O jogo acabou! Você ganhou!', (255, 255, 255), screen.get_rect().center))
+            pygame.display.update()
+            clock.tick(0.5)
+            running = False
 
         pygame.display.update()
         #pygame.display.flip()
