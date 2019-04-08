@@ -73,6 +73,7 @@ def main():
     while running:
         # FPS setado para 10 - Velocidade da movimentação do jogo
         clock.tick(10)
+
         for event in pygame.event.get():
             # Para fechar o jogo, basta clicar no botão 'X' da tela, ou apertar a tecla 'ESC'
             if event.type == pygame.QUIT or event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
